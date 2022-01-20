@@ -1,0 +1,7 @@
+.vscode/*
+obj/*
+*.dSYM
+*.DS_Store
+.cache/*
+*.swp
+compile_commands.json
