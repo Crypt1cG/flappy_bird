@@ -14,8 +14,8 @@ WXFLAGS = `wx-config --libs` `wx-config --cxxflags`
  	WXTHING = wx-config
  endif
 
-FILES = src/GUI.cpp src/bird.cpp
-OBJECTS = bin/GUI.o bin/bird.o
+FILES = src/GUI.cpp src/Game.cpp
+OBJECTS = bin/GUI.o bin/Game.o
 
 # @ supresses output from command
 all: $(OBJECTS)
@@ -24,7 +24,7 @@ all: $(OBJECTS)
 bin/GUI.o: src/GUI.cpp
 	$(CXX) $^ $(CXXFLAGS) `$(WXTHING) --cxxflags` -c -o $@ -g
 
-bin/bird.o: src/bird.cpp
+bin/Game.o: src/Game.cpp
 	$(CXX) $^ $(CXXFLAGS) `$(WXTHING) --cxxflags` -c -o $@ -g
 
 debug: $(OBJECTS)

@@ -1,6 +1,12 @@
 #include <wx/wx.h>
 #include <wx/timer.h>
+#include "include/Game.hpp"
+#include "wx/defs.h"
 #include <iostream>
+
+#define WIDTH 1000
+#define HEIGHT 800
+#define TICK_SPEED 16 // ms
 
 class Panel;
 
@@ -17,11 +23,12 @@ class Panel : public wxPanel
 {
 public:
 	Panel(wxWindow* parent);
+	~Panel();
+	Game* game;
 
 	void paintEvent(wxPaintEvent& event);
 	void paintNow();
 	void render(wxDC& dc);
-	//void OnKeyPressed(wxKeyEvent& event);
 };
 
 class Frame;
@@ -42,14 +49,13 @@ Timer::Timer(Panel* panel) : wxTimer()
 
 void Timer::Notify()
 {
-	std::cout << "tick" << std::endl;
+	panel->game->update(1000.0 / TICK_SPEED);
 	panel->Refresh();
 }
 
 void Timer::start()
 {
-	std::cout << "timer started" << std::endl;
-	wxTimer::Start(1000);
+	wxTimer::Start(TICK_SPEED); // ~60 fps (16 ms per frame)
 }
 
 IMPLEMENT_APP(App)
@@ -59,7 +65,7 @@ class Frame : public wxFrame
 public:
 	Frame() : wxFrame(NULL, wxID_ANY, "Mandelbrot")
 	{
-		SetInitialSize(wxSize(1000, 800));
+		SetInitialSize(wxSize(WIDTH, HEIGHT));
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		panel = new Panel(this);
 		sizer->Add(panel, 1, wxEXPAND);
@@ -98,43 +104,29 @@ bool App::OnInit()
 
 Panel::Panel(wxWindow* parent) : wxPanel(parent)
 {
-	std::srand(std::time(0)); // so rand num is not the same every time ! (rand based on current time)
-
-	//Bind(wxEVT_CHAR, &Panel::OnKeyPressed, this);
+	game = new Game(WIDTH, HEIGHT);
+	Bind(wxEVT_CHAR, &Game::OnKeyPressed, game);
 	Bind(wxEVT_PAINT, &Panel::paintEvent, this);
 }
 
-//void Panel::OnKeyPressed(wxKeyEvent& event)
-//{
-//	wxChar uc = event.GetUnicodeKey();
-//	if (uc != WXK_NONE)
-//	{
-//		std::cout << "you pressed: " << (char)uc << std::endl;
-//		paintNow();
-//	}
-//	else
-//	{
-//		bool shift = event.ShiftDown();
-//		int num = event.GetKeyCode();
-//		paintNow();
-//	}
-//}
+Panel::~Panel()
+{
+	delete game;
+}
 
 void Panel::paintEvent(wxPaintEvent& event)
 {
-	std::cout << "1" << std::endl;
 	wxPaintDC dc(this);
 	render(dc);
 }
 
 void Panel::paintNow()
 {
-	std::cout << "2" << std::endl;
 	wxClientDC dc(this);
 	render(dc);
 }
 
 void Panel::render(wxDC& dc)
 {
-	std::cout << "tock?" << std::endl;
+	game->draw(dc);
 }
