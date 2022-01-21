@@ -41,7 +41,6 @@ class App : public wxApp
 
 // https://wiki.wxwidgets.org/Making_a_render_loop
 
-
 Timer::Timer(Panel* panel) : wxTimer()
 {
 	Timer::panel = panel;
@@ -63,9 +62,9 @@ IMPLEMENT_APP(App)
 class Frame : public wxFrame
 {
 public:
-	Frame() : wxFrame(NULL, wxID_ANY, "Mandelbrot")
+	Frame() : wxFrame(NULL, wxID_ANY, "Flappy Bird", wxPoint(50, 50))
 	{
-		SetInitialSize(wxSize(WIDTH, HEIGHT));
+		SetClientSize(wxSize(WIDTH, HEIGHT));
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		panel = new Panel(this);
 		sizer->Add(panel, 1, wxEXPAND);

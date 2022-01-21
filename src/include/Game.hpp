@@ -7,6 +7,7 @@ class Pipe
 public:
 	int x, y, gap;
 	void draw(wxDC& dc);
+	Pipe(int x, int y, int gap);
 };
 
 class Bird
@@ -25,7 +26,8 @@ public:
 class Game
 {
 	int width, height;
-	Pipe p;
+	bool paused;
+	std::vector<Pipe> pipes;
 
 public:
 	Bird bird;

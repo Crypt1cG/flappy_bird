@@ -1,17 +1,18 @@
 [
  {
-  "directory": "/home/cryptic/Coding/flappy_bird",
+  "directory": "/Users/njohnson23/coding/flappy_bird",
   "arguments": [
    "g++",
    "src/GUI.cpp",
    "-std=c++17",
    "-pthread",
-   "-I/usr/lib/wx/include/gtk3-unicode-3.0",
-   "-I/usr/include/wx-3.0",
+   "-I/usr/local/lib/wx/include/osx_cocoa-unicode-3.1",
+   "-I/usr/local/include/wx-3.1",
    "-D_FILE_OFFSET_BITS=64",
    "-DWXUSINGDLL",
-   "-D__WXGTK__",
-   "-pthread",
+   "-D__WXMAC__",
+   "-D__WXOSX__",
+   "-D__WXOSX_COCOA__",
    "-c",
    "-o",
    "bin/GUI.o",
@@ -20,23 +21,24 @@
   "file": "src/GUI.cpp"
  },
  {
-  "directory": "/home/cryptic/Coding/flappy_bird",
+  "directory": "/Users/njohnson23/coding/flappy_bird",
   "arguments": [
    "g++",
-   "src/bird.cpp",
+   "src/Game.cpp",
    "-std=c++17",
    "-pthread",
-   "-I/usr/lib/wx/include/gtk3-unicode-3.0",
-   "-I/usr/include/wx-3.0",
+   "-I/usr/local/lib/wx/include/osx_cocoa-unicode-3.1",
+   "-I/usr/local/include/wx-3.1",
    "-D_FILE_OFFSET_BITS=64",
    "-DWXUSINGDLL",
-   "-D__WXGTK__",
-   "-pthread",
+   "-D__WXMAC__",
+   "-D__WXOSX__",
+   "-D__WXOSX_COCOA__",
    "-c",
    "-o",
-   "bin/bird.o",
+   "bin/Game.o",
    "-g"
   ],
-  "file": "src/bird.cpp"
+  "file": "src/Game.cpp"
  }
 ]
