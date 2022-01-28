@@ -62,8 +62,11 @@ IMPLEMENT_APP(App)
 class Frame : public wxFrame
 {
 public:
-	Frame() : wxFrame(NULL, wxID_ANY, "Flappy Bird", wxPoint(50, 50))
+	Frame() : wxFrame(NULL, wxID_ANY, "Flappy Bird")
 	{
+	#ifdef __MACH__
+		SetPosition(50, 50);
+	#endif
 		SetClientSize(wxSize(WIDTH, HEIGHT));
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		panel = new Panel(this);

@@ -6,7 +6,7 @@ class Pipe
 {
 public:
 	int x, y, gap;
-	void draw(wxDC& dc);
+	void draw(wxDC& dc, int width, int height);
 	Pipe(int x, int y, int gap);
 };
 

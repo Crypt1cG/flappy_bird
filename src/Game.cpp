@@ -1,8 +1,9 @@
 #include "include/Game.hpp"
 #include <iostream>
 
-#define GRAVITY 25
-#define SPEED 5
+#define GRAVITY 40
+#define SPEED 4
+#define GAP 175
 
 Game::Game(int w, int h)
 {
@@ -11,23 +12,22 @@ Game::Game(int w, int h)
 	paused = true;
 
 	bird = Bird(height / 2, 0);
+	bird.falling = false;
 
-	pipes = {Pipe(300, 400, 100), Pipe(600, 200, 75), Pipe(900, 100, 100)};
+	pipes = {Pipe(550, 400, GAP), Pipe(900, 200, GAP), Pipe(1250, 100, GAP), Pipe(1600, 100, GAP)};
 }
 
 void Game::draw(wxDC& dc)
 {
-	bird.draw(dc);
 	for (Pipe& p : pipes)
 	{
-		p.draw(dc);
+		p.draw(dc, width, height);
 	}
+	bird.draw(dc);
 }
 
 void Game::update(double tps)
 {
-	if (paused) return;
-
 	if (bird.falling)
 		bird.velocity -= GRAVITY / tps;
 	else bird.velocity = 0;
@@ -46,12 +46,31 @@ void Game::update(double tps)
 	}
 	bird.height = new_height;
 
-	for (Pipe& p : pipes)
+	if (paused) return;
+
+	for (int i = 0; i < pipes.size(); i++)
 	{
+		Pipe& p = pipes[i];
 		p.x -= SPEED;
-		if (p.x < -25)
+		if (p.x < -50)
 		{
-			p = Pipe(1000 + rand() % 100 - 50, rand() % 600, 100);
+			int y = rand() % 400 + 200;
+			int prev_index = i - 1 >= 0 ? i - 1 : pipes.size() - 1;
+			int x = pipes[prev_index].x + 300 + rand() % 100;
+			p = Pipe(x, y, GAP);
+		}
+		else
+		{
+			// bird left side is x = 100, it is bird.size wide
+			// pipes are 75 wide
+			if (p.x >= 25 && p.x <= 100 + bird.size) // when p.x = 25, right edge is on left edge of bird
+			{
+				int bird_y = 800 - bird.height;
+				if (bird_y <= p.y - p.gap / 2 || bird_y + bird.size >= p.y + p.gap / 2)
+				{
+					paused = true;
+				}
+			}
 		}
 	}
 }
@@ -68,13 +87,13 @@ void Game::OnKeyPressed(wxKeyEvent& evt)
 		else if (uc == WXK_SPACE)
 		{
 			paused = false;
-			double top_speed = 17.0;
+			double top_speed = 12.0;
 			double speed_left = top_speed - bird.velocity;
 			double delta_v = 12;
 			if (speed_left / 2 < 10) delta_v = speed_left / 2;
 			double new_velocity = bird.velocity + delta_v;
 			//if (new_velocity > top_speed) new_velocity = top_speed;
-			bird.velocity = new_velocity;
+			bird.velocity = top_speed;
 			bird.falling = true;
 			std::cout << bird.velocity << "\n";
 		}
@@ -103,11 +122,12 @@ void Bird::draw(wxDC& dc)
 	dc.DrawRectangle(100, 800 - height, size, size);
 }
 
-void Pipe::draw(wxDC& dc)
+void Pipe::draw(wxDC& dc, int width, int height)
 {
+	if (x > width) return;
 	dc.SetBrush(wxBrush(wxColor(0, 255, 0, 255)));
 	dc.DrawRectangle(x, 0, 75, y - gap / 2);
-	dc.DrawRectangle(x, y + gap / 2, 75, 800 - (y + gap / 2));
+	dc.DrawRectangle(x, y + gap / 2, 75, height - (y + gap / 2));
 }
 
 Pipe::Pipe(int x, int y, int gap)
