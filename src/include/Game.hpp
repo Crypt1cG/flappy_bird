@@ -26,7 +26,7 @@ public:
 class Game
 {
 	int width, height;
-	bool paused;
+	bool paused, ended;
 	std::vector<Pipe> pipes;
 
 public:
@@ -35,4 +35,5 @@ public:
 	void draw(wxDC& dc);
 	void update(double tps);
 	void OnKeyPressed(wxKeyEvent& evt);
+	void reset();
 };

@@ -65,7 +65,7 @@ public:
 	Frame() : wxFrame(NULL, wxID_ANY, "Flappy Bird")
 	{
 	#ifdef __MACH__
-		SetPosition(50, 50);
+		SetPosition(wxPoint(50, 50));
 	#endif
 		SetClientSize(wxSize(WIDTH, HEIGHT));
 		wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
