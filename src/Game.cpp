@@ -15,7 +15,7 @@ Game::Game(int w, int h)
 	bird = Bird(height / 2, 0);
 	bird.falling = false;
 
-	pipes = {Pipe(550, 400, GAP), Pipe(900, 200, GAP), Pipe(1250, 100, GAP), Pipe(1600, 100, GAP)};
+	pipes = {Pipe(550, rand() % 400 + 200, GAP), Pipe(900, rand() % 400 + 200, GAP), Pipe(1250, rand() % 400 + 200, GAP), Pipe(1600, rand() % 400 + 200, GAP)};
 }
 
 void Game::draw(wxDC& dc)
@@ -29,7 +29,7 @@ void Game::draw(wxDC& dc)
 
 void Game::reset()
 {
-	pipes = {Pipe(550, 400, GAP), Pipe(900, 200, GAP), Pipe(1250, 100, GAP), Pipe(1600, 100, GAP)};
+	pipes = {Pipe(550, rand() % 400 + 200, GAP), Pipe(900, rand() % 400 + 200, GAP), Pipe(1250, rand() % 400 + 200, GAP), Pipe(1600, rand() % 400 + 200, GAP)};
 	bird = Bird(height / 2, 0);
 	bird.falling = false;
 	paused = true;
@@ -80,6 +80,7 @@ void Game::update(double tps)
 				if (bird_y <= p.y - p.gap / 2 || bird_y + bird.size >= p.y + p.gap / 2)
 				{
 					paused = true;
+					bird.velocity = 0;
 					ended = true;
 				}
 			}
