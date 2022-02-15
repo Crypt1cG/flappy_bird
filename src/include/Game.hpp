@@ -20,6 +20,7 @@ public:
 	
 	Bird(int h, double v);
 	Bird();
+	void jump();
 	void draw(wxDC& dc);
 };
 

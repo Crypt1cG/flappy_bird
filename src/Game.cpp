@@ -3,6 +3,7 @@
 
 #define GRAVITY 40
 #define SPEED 4
+#define TOP_SPEED 12
 #define GAP 175
 
 Game::Game(int w, int h)
@@ -100,18 +101,11 @@ void Game::OnKeyPressed(wxKeyEvent& evt)
 		else if (uc == WXK_SPACE && !ended)
 		{
 			paused = false;
-			double top_speed = 12.0;
-			double speed_left = top_speed - bird.velocity;
-			double delta_v = 12;
-			if (speed_left / 2 < 10) delta_v = speed_left / 2;
-			double new_velocity = bird.velocity + delta_v;
-			//if (new_velocity > top_speed) new_velocity = top_speed;
-			bird.velocity = top_speed;
-			bird.falling = true;
+			bird.jump();
 		}
 		else if (uc == 'r')
 			reset();
-		std::cout << "you pressed: " << (char)uc << std::endl;
+		// std::cout << "you pressed: " << (char)uc << std::endl;
 	}
 	else
 	{
@@ -134,6 +128,12 @@ void Bird::draw(wxDC& dc)
 {
 	dc.SetBrush(wxBrush(wxColor(255, 0, 0, 255)));
 	dc.DrawRectangle(100, 800 - height, size, size);
+}
+
+void Bird::jump()
+{
+	velocity = TOP_SPEED;
+	falling = true;
 }
 
 void Pipe::draw(wxDC& dc, int width, int height)
