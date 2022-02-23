@@ -1,3 +1,6 @@
+#include <chrono>
+#include <cmath>
+#include <random>
 #include <string>
 
 class NeuralNet
@@ -6,6 +9,8 @@ public:
 	// CHANGE THESE 2 LINES TO CHANGE NN SHAPE
 	static const int num_hidden_layers = 3;
 	static const inline int sizes[] = {3, 4, 4, 1};
+
+	static std::default_random_engine generator;
 
 	double* weights[num_hidden_layers];
 	double* biases[num_hidden_layers];

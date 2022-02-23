@@ -67,7 +67,7 @@ void Game::reset()
 	// there should be one left in nets
 	for (int i = nets.size(); i < num_nns; i++)
 	{
-		nets.push_back(nets[0].create_random_child(0.5, 0.6));
+		nets.push_back(nets[0].create_random_child(0.5, std::max(0.01, 0.6 - generation / 100.0)));
 		//nets[i].print();
 	}
 

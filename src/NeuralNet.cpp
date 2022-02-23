@@ -3,7 +3,11 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <chrono>
 #include "include/NeuralNet.hpp"
+
+static unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine NeuralNet::generator = std::default_random_engine(seed);
 
 NeuralNet::NeuralNet()
 {
@@ -14,7 +18,6 @@ NeuralNet::NeuralNet()
 		biases[i] = new double[sizes[i + 1]];
 	}
 
-	std::default_random_engine generator = std::default_random_engine();
 	std::normal_distribution<double> distribution(0.0, 1.0);
 
 	for (int i = 0; i < num_hidden_layers; i++)
@@ -85,7 +88,6 @@ NeuralNet NeuralNet::create_random_child(double mutation_chance, double std_devi
 
 	NeuralNet new_nn = NeuralNet();
 
-	std::default_random_engine generator = std::default_random_engine();
 	std::normal_distribution<double> distribution(0.0, std_deviation);
 
 	for (int i = 0; i < num_hidden_layers; i++)

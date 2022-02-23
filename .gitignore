@@ -6,3 +6,4 @@ obj/*
 *.swp
 *.swo
 compile_commands.json
+best.txt
