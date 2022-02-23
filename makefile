@@ -14,8 +14,7 @@ WXFLAGS = `wx-config --libs` `wx-config --cxxflags`
  	WXTHING = wx-config
  endif
 
-FILES = src/GUI.cpp src/Game.cpp
-OBJECTS = bin/GUI.o bin/Game.o
+OBJECTS = bin/GUI.o bin/Game.o bin/NeuralNet.o
 
 # @ supresses output from command
 all: $(OBJECTS)
@@ -27,8 +26,11 @@ bin/GUI.o: src/GUI.cpp
 bin/Game.o: src/Game.cpp
 	$(CXX) $^ $(CXXFLAGS) `$(WXTHING) --cxxflags` -c -o $@ -g
 
+bin/NeuralNet.o: src/NeuralNet.cpp
+	$(CXX) $^ $(CXXFLAGS) -c -o $@ -g
+
 debug: $(OBJECTS)
-	$(CXX) $(OBJECTS) $(CXXFLAGS) $(WXFLAGS) -g -o bin/flappy
+	$(CXX) $(OBJECTS) $(CXXFLAGS) `$(WXTHING) --libs` -g -o bin/flappy
 
 clean:
 	$(RM) bin/flappy $(OBJECTS)
