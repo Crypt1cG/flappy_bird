@@ -27,7 +27,7 @@ public:
 
 class Game
 {
-	const static int num_nns = 32;
+	const static int num_nns = 64;
 	int width, height;
 	bool paused;
 	std::vector<Pipe> pipes;

@@ -74,6 +74,7 @@ void Game::reset()
 	generation++;
 	if (generation % 10 == 0) std::cout << "Generation: " << generation << std::endl;
 	
+	std::cout << "Max score: " << score << std::endl;
 	score = 0;
 	
 	//bird = Bird(height / 2, 0);
