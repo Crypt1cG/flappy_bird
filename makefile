@@ -7,7 +7,7 @@ WXFLAGS = `wx-config --libs` `wx-config --cxxflags`
  UNAME_S := $(shell uname -s)
  ifeq ($(UNAME_S),Linux)
 # 	OPENCL_FLAGS = -lOpenCL
- 	WXTHING = wx-config-gtk3
+ 	WXTHING = wx-config # used to be wx-config-gtk3 ?? 
  endif
  ifeq ($(UNAME_S),Darwin)
 # 	OPENCL_FLAGS = -framework OpenCl
